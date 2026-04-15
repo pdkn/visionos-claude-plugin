@@ -1,0 +1,24 @@
+{
+  "name": "build-visionos-apps",
+  "version": "2.0.0",
+  "description": "Build, debug, and ship visionOS 26 apps for Apple Vision Pro. Combines XcodeBuildMCP workflows with spatial SwiftUI, RealityKit, ARKit, and engineering best practices.",
+  "author": {
+    "name": "Studio Meije",
+    "url": "https://github.com/studiomeije"
+  },
+  "homepage": "https://github.com/pdkn/visionos-claude-plugin",
+  "repository": "https://github.com/pdkn/visionos-claude-plugin.git",
+  "license": "MIT",
+  "keywords": [
+    "visionos",
+    "realitykit",
+    "arkit",
+    "spatial",
+    "swiftui",
+    "xcode",
+    "apple-vision-pro"
+  ],
+  "skills": ["./SKILL.md", "./skills/"],
+  "commands": "./commands/",
+  "agents": "./agents/"
+}

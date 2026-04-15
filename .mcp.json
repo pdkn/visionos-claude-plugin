@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "XcodeBuildMCP": {
+      "command": "xcodebuilder-mcp",
+      "args": [],
+      "env": {}
+    }
+  }
+}
