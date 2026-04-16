@@ -56,6 +56,7 @@ If XcodeBuildMCP is not available, fall back to direct `xcodebuild` and `simctl`
 ### Automation and tooling
 
 - **build-run-debug** - XcodeBuildMCP and shell-based build/run/debug workflows
+- **telemetry** - Logger/OSLog instrumentation, signposts, runtime event verification
 - **ui-automation** - AXe-based simulator automation (screenshots, video, accessibility dumps)
 
 ## Which Agent for Which Situation

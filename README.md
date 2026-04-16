@@ -26,7 +26,7 @@ trust boundaries, etc.
 You do not need agent-skills loaded to use this plugin - the lenses are
 self-contained. But if you have agent-skills available, they pair cleanly.
 
-## Skills (28)
+## Skills (29)
 
 ### Platform skills (visionOS APIs and patterns)
 
@@ -74,6 +74,7 @@ self-contained. But if you have agent-skills available, they pair cleanly.
 | Skill | Use When |
 |-------|----------|
 | `build-run-debug` | XcodeBuildMCP and shell-based build/run/debug |
+| `telemetry` | Logger/OSLog instrumentation, signposts, runtime event verification |
 | `ui-automation` | AXe-based simulator automation: screenshots, video, accessibility dumps |
 
 ## Commands (9)

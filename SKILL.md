@@ -7,7 +7,7 @@ description: Build, debug, and ship visionOS 26 apps for Apple Vision Pro. Combi
 
 ## Overview
 
-This plugin provides 28 skills, 3 agents, and 9 commands for building visionOS 26 applications for Apple Vision Pro.
+This plugin provides 29 skills, 3 agents, and 9 commands for building visionOS 26 applications for Apple Vision Pro.
 
 The skill set is organized into 4 sections:
 
@@ -66,6 +66,7 @@ These skills extend a specific agent-skills pattern with visionOS-specific conce
 | Skill | Use When |
 |-------|----------|
 | [build-run-debug](skills/build-run-debug/SKILL.md) | Building, running, and debugging with XcodeBuildMCP or shell fallback |
+| [telemetry](skills/telemetry/SKILL.md) | Logger/OSLog instrumentation, signposts, verifying runtime events after a build |
 | [ui-automation](skills/ui-automation/SKILL.md) | AXe-based simulator automation: screenshots, video, keyboard, accessibility dumps |
 
 ## Agents
