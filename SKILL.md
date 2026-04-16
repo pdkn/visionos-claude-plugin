@@ -7,14 +7,13 @@ description: Build, debug, and ship visionOS 26 apps for Apple Vision Pro. Combi
 
 ## Overview
 
-This plugin provides 29 skills, 3 agents, and 9 commands for building visionOS 26 applications for Apple Vision Pro.
+This plugin provides 28 skills, 3 agents, and 9 commands for building visionOS 26 applications for Apple Vision Pro.
 
-The skill set is organized into 4 sections:
+The skill set is organized into 3 sections:
 
 1. **Platform skills** - visionOS APIs, patterns, and SDK knowledge
 2. **Workflow lenses** - visionOS-specific extensions of [agent-skills](https://github.com/addyosmani/agent-skills) workflows
-3. **Engineering disciplines** - spatial-specialized design and quality skills
-4. **Automation and tooling** - build, distribute, and simulator automation
+3. **Delivery and tooling** - build, debug, instrument, automate, and distribute
 
 Where a skill extends an agent-skills pattern, it references the generic skill and focuses on what is visionOS-specific.
 
@@ -54,20 +53,14 @@ These skills extend a specific agent-skills pattern with visionOS-specific conce
 | [adr-spatial](skills/adr-spatial/SKILL.md) | `documentation-and-adrs` | Scene model decisions, RealityKit architecture, ARKit strategy ADRs |
 | [ci-visionos](skills/ci-visionos/SKILL.md) | `ci-cd-and-automation` | Xcode Cloud and GitHub Actions for visionOS, privacy scans, TestFlight automation |
 
-## Engineering Disciplines (visionOS-specialized design)
-
-| Skill | Use When |
-|-------|----------|
-| [api-model-state-design](skills/api-model-state-design/SKILL.md) | @Observable, state ownership scopes, RealityKit entity vs SwiftUI state, module boundaries |
-| [packaging-distribution](skills/packaging-distribution/SKILL.md) | Archive, TestFlight, App Store submission, asc CLI |
-
-## Automation and Tooling
+## Delivery and Tooling
 
 | Skill | Use When |
 |-------|----------|
 | [build-run-debug](skills/build-run-debug/SKILL.md) | Building, running, and debugging with XcodeBuildMCP or shell fallback |
 | [telemetry](skills/telemetry/SKILL.md) | Logger/OSLog instrumentation, signposts, verifying runtime events after a build |
 | [ui-automation](skills/ui-automation/SKILL.md) | AXe-based simulator automation: screenshots, video, keyboard, accessibility dumps |
+| [packaging-distribution](skills/packaging-distribution/SKILL.md) | Archive, TestFlight, App Store submission, asc CLI |
 
 ## Agents
 

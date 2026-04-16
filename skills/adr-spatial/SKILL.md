@@ -70,7 +70,7 @@ Never edit a filed ADR. When a decision is revisited:
 
 - `spec-driven-spatial` - the ADR may be an output of spec work
 - `spatial-architecture` - to validate the decision against app topology
-- `api-model-state-design` - when the ADR touches state ownership
+- `spatial-architecture` - when the ADR touches state ownership or scene topology
 - `documentation-and-adrs` (agent-skills) - for the generic ADR template
 
 ## Guardrails

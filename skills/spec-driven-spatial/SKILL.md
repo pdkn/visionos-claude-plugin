@@ -54,7 +54,7 @@ visionOS-specific criteria the spec must include:
 ## When To Switch Skills
 
 - `spatial-architecture` - validate scene model against app-wide architecture
-- `api-model-state-design` - design the state ownership implied by the spec
+- `spatial-architecture` - design the state ownership implied by the spec
 - `adr-spatial` - record the scene model decision if non-obvious
 - `incremental-build` - after spec is approved, start implementation
 

@@ -14,6 +14,9 @@ Use it when:
   mixed flow
 - you are deciding which state is app-wide, scene-scoped, immersive-scoped, or
   view-local
+- you need to decide whether state belongs on a RealityKit entity component or
+  in a SwiftUI view model
+- you need to sync state between a window and an immersive space
 - a root file owns too many concerns and needs a refactor plan
 - you need a file or module plan before writing or splitting SwiftUI code
 
@@ -22,7 +25,7 @@ Use it when:
 | Reference | When to Use |
 |-----------|-------------|
 | [`references/surface-selection.md`](references/surface-selection.md) | When choosing window vs volume vs immersive space and their lifecycle boundaries. |
-| [`references/state-ownership.md`](references/state-ownership.md) | When deciding what belongs to the app, scene, feature coordinator, RealityKit owner, or view. |
+| [`references/state-ownership.md`](references/state-ownership.md) | When deciding what belongs to the app, scene, feature coordinator, RealityKit owner, or view - and when deciding whether state belongs on an entity component or a SwiftUI view model, or how to sync state across a window plus immersive space. |
 | [`references/file-layouts.md`](references/file-layouts.md) | When proposing a layered or feature-sliced file and module shape. |
 | [`references/refactor-playbook.md`](references/refactor-playbook.md) | When the app already exists and the main task is refactoring without breaking behavior. |
 | [`references/anti-patterns.md`](references/anti-patterns.md) | When you need to call out structural smells or explain why an approach is wrong. |

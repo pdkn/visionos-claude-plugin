@@ -26,7 +26,7 @@ trust boundaries, etc.
 You do not need agent-skills loaded to use this plugin - the lenses are
 self-contained. But if you have agent-skills available, they pair cleanly.
 
-## Skills (29)
+## Skills (28)
 
 ### Platform skills (visionOS APIs and patterns)
 
@@ -62,20 +62,14 @@ self-contained. But if you have agent-skills available, they pair cleanly.
 | `adr-spatial` | `documentation-and-adrs` | Scene model and RealityKit architecture ADRs |
 | `ci-visionos` | `ci-cd-and-automation` | Xcode Cloud, GitHub Actions, privacy scans |
 
-### Engineering disciplines
-
-| Skill | Use When |
-|-------|----------|
-| `api-model-state-design` | @Observable, state ownership scopes, entity vs view state, module boundaries |
-| `packaging-distribution` | Archive, TestFlight, App Store submission, asc CLI |
-
-### Automation and tooling
+### Delivery and tooling
 
 | Skill | Use When |
 |-------|----------|
 | `build-run-debug` | XcodeBuildMCP and shell-based build/run/debug |
 | `telemetry` | Logger/OSLog instrumentation, signposts, runtime event verification |
 | `ui-automation` | AXe-based simulator automation: screenshots, video, accessibility dumps |
+| `packaging-distribution` | Archive, TestFlight, App Store submission, asc CLI |
 
 ## Commands (9)
 
@@ -133,6 +127,16 @@ required for the core build/run/debug loop:
   for TestFlight uploads, App Store submissions, metadata, screenshots, and
   certificates. Used by the `packaging-distribution` skill. The `.p8` key
   must be loaded by you (`asc auth login`), never by the agent.
+
+## Recommended Companion Plugins
+
+This plugin focuses on what is specific to visionOS. Generic Swift language
+concerns are better handled by specialized tools that already exist.
+
+- **swift-lsp** (via Anthropic's plugin marketplace) - Wraps `sourcekit-lsp`
+  to provide type diagnostics, jump-to-definition, find-references, and hover
+  docs for Swift code. Install alongside this plugin for the full development
+  loop. This plugin deliberately does not re-implement language-level concerns.
 
 ## visionOS 26 Notes
 

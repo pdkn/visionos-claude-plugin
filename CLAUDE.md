@@ -48,16 +48,18 @@ If XcodeBuildMCP is not available, fall back to direct `xcodebuild` and `simctl`
 - **adr-spatial** - extends `documentation-and-adrs`
 - **ci-visionos** - extends `ci-cd-and-automation`
 
-### Engineering disciplines (spatial-specialized)
-
-- **api-model-state-design** - @Observable, state ownership, entity vs view state, module boundaries
-- **packaging-distribution** - archive, TestFlight, App Store submission, asc CLI
-
-### Automation and tooling
+### Delivery and tooling
 
 - **build-run-debug** - XcodeBuildMCP and shell-based build/run/debug workflows
 - **telemetry** - Logger/OSLog instrumentation, signposts, runtime event verification
 - **ui-automation** - AXe-based simulator automation (screenshots, video, accessibility dumps)
+- **packaging-distribution** - archive, TestFlight, App Store submission, asc CLI
+
+## Recommended Companion Plugins
+
+This plugin focuses on what is specific to visionOS. Generic Swift language concerns are better handled by specialized tools.
+
+- **swift-lsp** (via Anthropic's plugin marketplace) - Wraps `sourcekit-lsp` to provide type diagnostics, jump-to-definition, find-references, and hover docs for Swift. Install alongside this plugin for the full development loop. This plugin deliberately does not re-implement language-level concerns.
 
 ## Which Agent for Which Situation
 
