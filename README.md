@@ -149,6 +149,19 @@ concerns are better handled by specialized tools that already exist.
 - Privacy entitlements for world sensing, hand tracking, and camera access
   must be declared in both `.entitlements` and `Info.plist`
 
+## Comparison with visionos-codex-plugin
+
+This plugin originated as a Claude Code fork of Studio Meije's
+[`visionos-codex-plugin`](https://github.com/studiomeije/visionos-codex-plugin)
+and has since diverged substantially. Both plugins share the 13 visionOS
+platform skills. Claude adds an engineering discipline layer (idea-refine,
+spec-driven-spatial, TDD, debugging-triage, perf-90hz, security-visionos,
+deprecation-visionos, adr-spatial, git-workflow, ci-visionos), three agent
+personas, a build-log capture hook, and six additional slash commands.
+
+For the full feature matrix and when-to-use-which guidance, see
+[docs/comparison-with-codex.md](docs/comparison-with-codex.md).
+
 ---
 
 ## Credits
