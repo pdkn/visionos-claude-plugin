@@ -2,8 +2,8 @@
 
 A Claude Code plugin for building, debugging, and shipping visionOS 26 apps
 for Apple Vision Pro. Combines platform expertise (RealityKit, ARKit, spatial
-SwiftUI, SharePlay, USD, Shader Graph) with disciplined engineering workflows
-adapted from [agent-skills](https://github.com/addyosmani/agent-skills).
+SwiftUI, SharePlay, USD, Shader Graph) with visionOS-specialized engineering
+disciplines adapted from [agent-skills](https://github.com/addyosmani/agent-skills).
 
 ## Installation
 
@@ -15,38 +15,66 @@ claude --plugin-dir /path/to/visionos-claude-plugin
 
 Use `/reload-plugins` inside a session to pick up changes without restarting.
 
-## Skills (20)
+## Relationship to agent-skills
 
-### Platform Skills
+Many of this plugin's workflow skills are **visionOS lenses** on patterns
+from [agent-skills](https://github.com/addyosmani/agent-skills). Each lens
+references its Addy parent at the top and focuses only on what is specific
+to visionOS - scene model, 90Hz, ARKit authorization, entitlements, spatial
+trust boundaries, etc.
+
+You do not need agent-skills loaded to use this plugin - the lenses are
+self-contained. But if you have agent-skills available, they pair cleanly.
+
+## Skills (28)
+
+### Platform skills (visionOS APIs and patterns)
 
 | Skill | Use When |
 |-------|----------|
-| `spatial-architecture` | Choosing window vs volume vs immersive space, scene boundaries, state ownership |
-| `realitykit` | Entities, components, systems, render loop, RealityKit runtime |
+| `spatial-architecture` | Window vs volume vs immersive space, scene boundaries, state ownership topology |
+| `swiftui-spatial` | Spatial SwiftUI views, RealityView, Model3D, visionOS modifiers |
+| `realitykit` | Entities, components, systems, render loop |
 | `arkit` | ARKit sessions, providers, anchors, tracked-world behaviour |
-| `shareplay` | Group activities, shared immersive presence, spatial coordination |
+| `shareplay` | Group activities, shared immersive presence |
 | `shader-graph` | Shader Graph materials for RealityKit |
 | `usd` | USD asset editing, validation, runtime loading |
-| `signing-entitlements` | Signing, entitlements, privacy keys, provisioning |
-| `immersive-media` | Immersive media playback, spatial video, viewing experiences |
-| `swiftui-spatial` | Spatial SwiftUI views, scene types, visionOS modifiers |
-| `coding-standards` | Swift 6 concurrency, actor isolation, @Observable patterns |
-| `packaging-distribution` | Archive, TestFlight, App Store submission |
-| `swiftpm-visionos` | Swift Package Manager, Reality Composer Pro |
-| `test-triage` | XCTest and Swift Testing failure classification |
+| `immersive-media` | Immersive video, spatial video, playback |
 | `widgetkit` | visionOS WidgetKit spatial UI, mounting, animations |
-| `ui-automation` | AXe-based simulator automation: screenshots, video, accessibility dumps |
+| `swiftpm-visionos` | Swift Package Manager, Reality Composer Pro |
+| `signing-entitlements` | Signing, entitlements, privacy keys (build-time config) |
+| `coding-standards` | Swift 6 concurrency, actor isolation, @Observable |
 
-### Engineering Workflow Skills
+### Workflow lenses (extend agent-skills)
+
+| Skill | Extends | Focus |
+|-------|---------|-------|
+| `idea-refine` | `idea-refine` | Surface model brainstorming, spatial metaphors |
+| `spec-driven-spatial` | `spec-driven-development` | Scene model, entity lifecycle, ARKit/SharePlay/entitlements questions |
+| `incremental-build` | `incremental-implementation` | RealityKit slice ordering, simulator verification gate |
+| `tdd-visionos` | `test-driven-development` | XCTest + Swift Testing, RealityKit isolation, Prove-It for bugs |
+| `test-triage` | (pairs with tdd-visionos) | Post-failure classification |
+| `debugging-triage` | `debugging-and-error-recovery` | Five visionOS failure categories |
+| `perf-90hz` | `performance-optimization` | 11.1ms frame budget, Instruments, allocation-free loops |
+| `security-visionos` | `security-and-hardening` | ARKit/hand-tracking/camera trust, SharePlay trust |
+| `deprecation-visionos` | `deprecation-and-migration` | Migrate to Swift 6.2 + visionOS 26 patterns |
+| `git-workflow` | `git-workflow-and-versioning` | .xcodeproj/.entitlements dedicated commits |
+| `adr-spatial` | `documentation-and-adrs` | Scene model and RealityKit architecture ADRs |
+| `ci-visionos` | `ci-cd-and-automation` | Xcode Cloud, GitHub Actions, privacy scans |
+
+### Engineering disciplines
 
 | Skill | Use When |
 |-------|----------|
-| `build-run-debug` | Building, running, debugging with XcodeBuildMCP or shell tools |
-| `spec-driven-spatial` | Starting a new feature - write a spec before code |
-| `incremental-build` | Thin vertical slices, one RealityKit component/system at a time |
-| `debugging-triage` | Systematic root-cause debugging for visionOS runtime issues |
-| `adr-spatial` | Architecture decision records for spatial design choices |
-| `git-workflow` | Atomic commits, visionOS-specific commit discipline |
+| `api-model-state-design` | @Observable, state ownership scopes, entity vs view state, module boundaries |
+| `packaging-distribution` | Archive, TestFlight, App Store submission, asc CLI |
+
+### Automation and tooling
+
+| Skill | Use When |
+|-------|----------|
+| `build-run-debug` | XcodeBuildMCP and shell-based build/run/debug |
+| `ui-automation` | AXe-based simulator automation: screenshots, video, accessibility dumps |
 
 ## Commands (9)
 
@@ -58,7 +86,7 @@ Use `/reload-plugins` inside a session to pick up changes without restarting.
 | `/test-visionos-app` | Run tests with failure classification |
 | `/spec` | Start a feature specification (no code until approved) |
 | `/plan` | Break a spec into ordered, verifiable tasks |
-| `/review` | Multi-axis code review (correctness, spatial, Swift, security, performance) |
+| `/review` | Multi-axis code review |
 | `/ship` | Pre-launch checklist for TestFlight and App Store |
 | `/code-simplify` | Simplify visionOS code without changing behaviour |
 
@@ -73,10 +101,13 @@ Use `/reload-plugins` inside a session to pick up changes without restarting.
 ## Typical Workflow
 
 ```
+idea-refine              - shape a vague idea
 /spec "feature name"     - define what we're building
 /plan "feature name"     - break into verifiable slices
-/build run               - build and launch each slice
-/review                  - review before merge
+  tdd-visionos           - failing test first
+  [implement slice]      - one RealityKit component/system
+  [verify on simulator]  - gate before moving on
+/review                  - multi-axis review
 /ship                    - pre-launch checklist
 ```
 
@@ -107,10 +138,11 @@ required for the core build/run/debug loop:
 - ARKitSession requires explicit authorization - always check status before
   starting providers
 - Hand tracking runs at 90Hz - render loop code must sustain this rate
+  (see `perf-90hz`)
 - Scene types (WindowGroup, ImmersiveSpace) determine spatial presence -
-  choose deliberately
+  choose deliberately (see `spatial-architecture` and `spec-driven-spatial`)
 - Privacy entitlements for world sensing, hand tracking, and camera access
-  must be declared in both .entitlements and Info.plist
+  must be declared in both `.entitlements` and `Info.plist`
 
 ---
 
@@ -125,9 +157,10 @@ by [Studio Meije](https://github.com/studiomeije), inspired by:
 - [Thomas Ricouard](https://github.com/Dimillian/)
 - [Sharno](https://github.com/sharno)
 
-Engineering workflow skills adapted from
+Workflow lens skills adapted from
 [agent-skills](https://github.com/addyosmani/agent-skills) by
-[Addy Osmani](https://github.com/addyosmani).
+[Addy Osmani](https://github.com/addyosmani). Each lens extends one of
+Addy's generic patterns with visionOS-specific concerns.
 
 ## License
 
