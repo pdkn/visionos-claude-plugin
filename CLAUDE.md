@@ -28,6 +28,7 @@ If XcodeBuildMCP is not available, fall back to direct `xcodebuild` and `simctl`
 - **swiftpm-visionos** - Swift Package Manager and Reality Composer Pro
 - **test-triage** - XCTest and Swift Testing failure classification
 - **widgetkit** - visionOS WidgetKit spatial UI, mounting, animations
+- **ui-automation** - AXe-based simulator automation (screenshots, video, accessibility dumps)
 
 ### Engineering Workflow Skills
 

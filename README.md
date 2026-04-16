@@ -35,6 +35,7 @@ Use `/reload-plugins` inside a session to pick up changes without restarting.
 | `swiftpm-visionos` | Swift Package Manager, Reality Composer Pro |
 | `test-triage` | XCTest and Swift Testing failure classification |
 | `widgetkit` | visionOS WidgetKit spatial UI, mounting, animations |
+| `ui-automation` | AXe-based simulator automation: screenshots, video, accessibility dumps |
 
 ### Engineering Workflow Skills
 
@@ -84,6 +85,22 @@ Use `/reload-plugins` inside a session to pick up changes without restarting.
 The plugin declares XcodeBuildMCP as an MCP server in `.mcp.json`. It is
 activated automatically when the plugin loads. If unavailable, skills fall
 back to direct `xcodebuild` and `simctl` shell commands.
+
+## Optional External Tools
+
+These CLIs extend what the plugin can do. They are not bundled and are not
+required for the core build/run/debug loop:
+
+- **AXe** (`brew install cameroncooke/axe/axe`) - Apple Vision Pro simulator
+  automation for screenshots, video capture, keyboard input, hardware button
+  presses, and accessibility tree inspection. Used by the `ui-automation`
+  skill. AXe's 2D touch commands (`tap`/`swipe`/`gesture`) target iOS and are
+  not reliable on visionOS; the skill routes spatial gestures back to XCUITest.
+
+- **App Store Connect CLI** (`brew install asc`) - JWT-authenticated automation
+  for TestFlight uploads, App Store submissions, metadata, screenshots, and
+  certificates. Used by the `packaging-distribution` skill. The `.p8` key
+  must be loaded by you (`asc auth login`), never by the agent.
 
 ## visionOS 26 Notes
 

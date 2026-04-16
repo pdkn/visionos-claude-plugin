@@ -29,6 +29,7 @@ This plugin provides skills, agents, and commands for building visionOS 26 appli
 | [swiftpm-visionos](skills/swiftpm-visionos/SKILL.md) | Swift Package Manager and Reality Composer Pro integration |
 | [test-triage](skills/test-triage/SKILL.md) | XCTest and Swift Testing failure classification |
 | [widgetkit](skills/widgetkit/SKILL.md) | visionOS WidgetKit spatial UI, mounting, animations |
+| [ui-automation](skills/ui-automation/SKILL.md) | AXe-based simulator automation for screenshots, video, accessibility dumps, keyboard flows |
 
 ### Engineering Workflow Skills
 
