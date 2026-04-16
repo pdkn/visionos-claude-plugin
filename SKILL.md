@@ -7,7 +7,7 @@ description: Build, debug, and ship visionOS 26 apps for Apple Vision Pro. Combi
 
 ## Overview
 
-This plugin provides 28 skills, 3 agents, and 9 commands for building visionOS 26 applications for Apple Vision Pro.
+This plugin provides 26 skills, 3 agents, and 9 commands for building visionOS 26 applications for Apple Vision Pro.
 
 The skill set is organized into 3 sections:
 
@@ -49,9 +49,12 @@ These skills extend a specific agent-skills pattern with visionOS-specific conce
 | [perf-90hz](skills/perf-90hz/SKILL.md) | `performance-optimization` | 11.1ms frame budget, Instruments, allocation-free render loops |
 | [security-visionos](skills/security-visionos/SKILL.md) | `security-and-hardening` | ARKit/hand tracking/camera trust, SharePlay session trust, App Group isolation |
 | [deprecation-visionos](skills/deprecation-visionos/SKILL.md) | `deprecation-and-migration` | Migrate to Swift 6.2 + visionOS 26 patterns, kill outdated idioms |
-| [git-workflow](skills/git-workflow/SKILL.md) | `git-workflow-and-versioning` | .xcodeproj and .entitlements dedicated commits, scene-type branch naming |
-| [adr-spatial](skills/adr-spatial/SKILL.md) | `documentation-and-adrs` | Scene model decisions, RealityKit architecture, ARKit strategy ADRs |
 | [ci-visionos](skills/ci-visionos/SKILL.md) | `ci-cd-and-automation` | Xcode Cloud and GitHub Actions for visionOS, privacy scans, TestFlight automation |
+
+Commit conventions and ADR triggers for visionOS are reference docs rather
+than standalone skills:
+- `skills/coding-standards/references/xcode-commit-conventions.md` - `.xcodeproj`, `.entitlements`, privacy key, and asset catalog commit discipline. Pairs with `agent-skills:git-workflow-and-versioning`.
+- `skills/spatial-architecture/references/adr-triggers.md` - scene model, RealityKit architecture, ARKit strategy, and entitlement-set decisions that need an ADR. Pairs with `agent-skills:documentation-and-adrs`.
 
 ## Delivery and Tooling
 

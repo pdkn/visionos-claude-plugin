@@ -30,6 +30,7 @@ API standards.
 | [`references/concurrency-guidelines.md`](references/concurrency-guidelines.md) | When the work touches actors, `@MainActor`, `Sendable`, `Task`, `async let`, task groups, or strict concurrency diagnostics. |
 | [`references/observation-modeling.md`](references/observation-modeling.md) | When the work touches `@Observable`, view models, `@State`, `@Binding`, environment injection, or Combine-to-Observation migration. |
 | [`references/modern-swift-apis.md`](references/modern-swift-apis.md) | When the work is about API modernization, Foundation replacements, formatting, string matching, force unwraps, or Swift-native style. |
+| [`references/xcode-commit-conventions.md`](references/xcode-commit-conventions.md) | When committing visionOS work: `.xcodeproj`, `.entitlements`, `Info.plist` privacy keys, and asset catalog changes need dedicated commits with clear messages and scene-type branch naming. Use alongside `agent-skills:git-workflow-and-versioning`. |
 
 ## Workflow
 

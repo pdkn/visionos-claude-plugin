@@ -76,7 +76,7 @@ Every fix must add a regression test. For visionOS:
 - `perf-90hz` - when the triage category is render loop or hand tracking
 - `signing-entitlements` - when the category is entitlement or capability
 - `realitykit` / `arkit` - for deeper API-level debugging
-- `git-workflow` - after the fix is verified, commit separately from feature work
+- `coding-standards` (see `references/xcode-commit-conventions.md`) - after the fix is verified, commit separately from feature work
 
 ## Guardrails
 

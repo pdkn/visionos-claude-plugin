@@ -29,6 +29,7 @@ Use it when:
 | [`references/file-layouts.md`](references/file-layouts.md) | When proposing a layered or feature-sliced file and module shape. |
 | [`references/refactor-playbook.md`](references/refactor-playbook.md) | When the app already exists and the main task is refactoring without breaking behavior. |
 | [`references/anti-patterns.md`](references/anti-patterns.md) | When you need to call out structural smells or explain why an approach is wrong. |
+| [`references/adr-triggers.md`](references/adr-triggers.md) | When a scene model, RealityKit architecture, ARKit strategy, or entitlement-set decision needs an ADR. Use alongside `agent-skills:documentation-and-adrs`. |
 
 ## Workflow
 

@@ -55,7 +55,7 @@ visionOS-specific criteria the spec must include:
 
 - `spatial-architecture` - validate scene model against app-wide architecture
 - `spatial-architecture` - design the state ownership implied by the spec
-- `adr-spatial` - record the scene model decision if non-obvious
+- `spatial-architecture` (see `references/adr-triggers.md`) - record the scene model decision if non-obvious
 - `incremental-build` - after spec is approved, start implementation
 
 ## Guardrails

@@ -81,7 +81,7 @@ A short artifact ready to hand to `spec-driven-spatial`:
 ## When To Switch Skills
 
 - `spec-driven-spatial` - after ideation, write the formal spec
-- `adr-spatial` - if the surface model choice needs an ADR
+- `spatial-architecture` (see `references/adr-triggers.md`) - if the surface model choice needs an ADR
 - `spatial-architecture` - if the idea has architecture implications
 - `idea-refine` (agent-skills) - for the generic ideation techniques
 

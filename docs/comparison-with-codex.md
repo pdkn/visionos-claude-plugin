@@ -120,8 +120,8 @@ Plus these matching capabilities:
 | Packaging, TestFlight, App Store (asc CLI) | `packaging-distribution` | `packaging-distribution` + `/ship` checklist command + `xcode-build-agent` |
 | Simulator automation (AXe) | `ui-automation` | `ui-automation` |
 | CI/CD patterns for visionOS | no | `ci-visionos` |
-| Architecture decision records | no | `adr-spatial` |
-| Git workflow (dedicated .xcodeproj / .entitlements commits) | no | `git-workflow` |
+| Architecture decision records | no | Reference doc: `spatial-architecture/references/adr-triggers.md` |
+| Git workflow (dedicated .xcodeproj / .entitlements commits) | no | Reference doc: `coding-standards/references/xcode-commit-conventions.md` |
 
 ### Navigation and plugin structure
 
@@ -160,7 +160,7 @@ Plus these matching capabilities:
 
 | Count | Codex | Claude |
 |---|---|---|
-| Skills | 17 | 28 |
+| Skills | 17 | 26 |
 | Commands | 3 | 9 |
 | Agent personas | 0 | 3 |
 | Hooks | 0 | 1 |
@@ -178,7 +178,8 @@ Nothing else in Codex is missing from Claude.
 
 ## Things Claude does that Codex does not
 
-- 12 engineering workflow lens skills (idea-refine through ci-visionos)
+- 10 engineering workflow lens skills (idea-refine, spec-driven-spatial, incremental-build, tdd-visionos, debugging-triage, perf-90hz, security-visionos, deprecation-visionos, ci-visionos, plus test-triage pairing with tdd-visionos)
+- 2 reference docs under existing skills for commit conventions and ADR triggers
 - 3 agent personas with structured protocols
 - 6 additional slash commands (/build, /spec, /plan, /review, /ship, /code-simplify)
 - Post-build log capture hook with configurable filter modes

@@ -48,7 +48,7 @@ For any slice that adds to the render loop:
 - `debugging-triage` - when a slice fails to build or behaves unexpectedly
 - `tdd-visionos` - to write a test for the new slice before implementing
 - `perf-90hz` - if a slice shows frame timing issues
-- `git-workflow` - when a slice passes the gate and is ready to commit
+- `coding-standards` (see `references/xcode-commit-conventions.md`) - when a slice passes the gate and is ready to commit
 
 ## Guardrails
 

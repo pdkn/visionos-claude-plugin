@@ -44,9 +44,13 @@ If XcodeBuildMCP is not available, fall back to direct `xcodebuild` and `simctl`
 - **perf-90hz** - extends `performance-optimization` with 90Hz budget
 - **security-visionos** - extends `security-and-hardening` (runtime trust; pairs with signing-entitlements for build config)
 - **deprecation-visionos** - extends `deprecation-and-migration` for Swift 6.2 + visionOS 26
-- **git-workflow** - extends `git-workflow-and-versioning`
-- **adr-spatial** - extends `documentation-and-adrs`
 - **ci-visionos** - extends `ci-cd-and-automation`
+
+Commit conventions (`.xcodeproj`, `.entitlements`, asset catalog discipline)
+and ADR triggers (scene model, RealityKit architecture decisions) are
+reference docs rather than standalone skills:
+- `skills/coding-standards/references/xcode-commit-conventions.md`
+- `skills/spatial-architecture/references/adr-triggers.md`
 
 ### Delivery and tooling
 

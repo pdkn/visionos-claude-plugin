@@ -121,7 +121,7 @@ Keep Combine only where you need its operator composition and no clean async alt
 
 - Switch to `coding-standards` for the target patterns' details
 - Switch to `test-triage` if migrations break tests
-- Switch to `git-workflow` for commit structure during migration
+- See `coding-standards/references/xcode-commit-conventions.md` for commit structure during migration
 
 ## Output Expectations
 

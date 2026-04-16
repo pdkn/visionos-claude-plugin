@@ -26,7 +26,7 @@ trust boundaries, etc.
 You do not need agent-skills loaded to use this plugin - the lenses are
 self-contained. But if you have agent-skills available, they pair cleanly.
 
-## Skills (28)
+## Skills (26)
 
 ### Platform skills (visionOS APIs and patterns)
 
@@ -58,9 +58,12 @@ self-contained. But if you have agent-skills available, they pair cleanly.
 | `perf-90hz` | `performance-optimization` | 11.1ms frame budget, Instruments, allocation-free loops |
 | `security-visionos` | `security-and-hardening` | ARKit/hand-tracking/camera trust, SharePlay trust |
 | `deprecation-visionos` | `deprecation-and-migration` | Migrate to Swift 6.2 + visionOS 26 patterns |
-| `git-workflow` | `git-workflow-and-versioning` | .xcodeproj/.entitlements dedicated commits |
-| `adr-spatial` | `documentation-and-adrs` | Scene model and RealityKit architecture ADRs |
 | `ci-visionos` | `ci-cd-and-automation` | Xcode Cloud, GitHub Actions, privacy scans |
+
+Commit conventions and ADR triggers live as reference docs rather than
+standalone skills:
+- `skills/coding-standards/references/xcode-commit-conventions.md`
+- `skills/spatial-architecture/references/adr-triggers.md`
 
 ### Delivery and tooling
 
@@ -156,7 +159,7 @@ This plugin originated as a Claude Code fork of Studio Meije's
 and has since diverged substantially. Both plugins share the 13 visionOS
 platform skills. Claude adds an engineering discipline layer (idea-refine,
 spec-driven-spatial, TDD, debugging-triage, perf-90hz, security-visionos,
-deprecation-visionos, adr-spatial, git-workflow, ci-visionos), three agent
+deprecation-visionos, ci-visionos), three agent
 personas, a build-log capture hook, and six additional slash commands.
 
 For the full feature matrix and when-to-use-which guidance, see
