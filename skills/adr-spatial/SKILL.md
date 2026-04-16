@@ -1,57 +1,81 @@
 ---
 name: adr-spatial
-description: Record architecture decision records for visionOS. Every scene model decision, significant RealityKit architecture choice, and ARKit session strategy gets an ADR. Template covers context, decision, consequences, and alternatives rejected.
+description: visionOS lens on architecture decision records. Records the scene model, RealityKit architecture, and ARKit session strategy decisions that shape a spatial app. Adds the visionOS-specific context fields a generic ADR template misses.
 ---
 
-# ADR - Spatial Architecture Decisions
+# ADRs for Spatial Architecture - visionOS Lens
 
-## Quick Start
+## Addy Parent
 
-Use this skill when an architectural decision needs to be recorded for future
-reference.
+This skill extends `documentation-and-adrs` from agent-skills. Follow the generic "Context / Decision / Consequences / Alternatives" ADR template there. This skill adds the visionOS decision triggers and required context fields.
 
-Use it when:
-- you are choosing between scene models (window, volume, immersive space)
-- a significant RealityKit architecture choice is being made
-- an ARKit session strategy is being decided
-- you need to document why an alternative was rejected
-- a future developer or agent needs to understand why a choice was made
+## Decisions That Need an ADR
 
-## Load References When
+File an ADR when any of these are decided:
 
-| Reference | When to Use |
-|-----------|-------------|
-| [`references/surface-selection.md`](references/surface-selection.md) | When the ADR involves a scene model choice. |
-| [`references/realitykit-components.md`](references/realitykit-components.md) | When the ADR involves RealityKit entity or component architecture. |
-| [`references/arkit-sessions.md`](references/arkit-sessions.md) | When the ADR involves ARKit provider or session strategy. |
-| [`references/adr-template.md`](references/adr-template.md) | When you need the standard ADR template format. |
+- **Scene model** - why window vs volume vs immersive space for this feature or app area
+- **Entity architecture** - how entity hierarchies are organized (deep vs flat, component boundaries)
+- **System design** - which RealityKit systems exist, their update order, their dependencies
+- **ARKit strategy** - which providers, when they start and stop, how authorization is handled
+- **SharePlay design** - what state is shared, what is private, conflict resolution
+- **Persistence boundary** - what survives app restart, what is scene-scoped, what is transient
+- **State ownership topology** - where app / scene / immersive state lives
+- **Entitlement set** - which capabilities the app requests and why
 
-## Workflow
+Do NOT file ADRs for trivial choices (file naming, which stdlib collection to use, etc).
 
-1. Identify the architectural decision being made.
-2. Document the context - what problem are we solving, what constraints exist.
-3. Document the decision.
-4. Document consequences (positive and negative).
-5. Document alternatives that were considered and why they were rejected.
-6. File the ADR in the project's `docs/adr/` directory.
-7. Reference the ADR in relevant code comments.
+## visionOS-Specific Context Fields
+
+Beyond the generic ADR template, a spatial ADR should capture:
+
+### User Spatial Intent
+What is the user doing, spatially? (sitting and reading, standing and manipulating, fully immersed, sharing a room)
+
+### Surface Implications
+Which scene types are in play? What are the transition paths between them?
+
+### ARKit Dependencies
+Which providers does this decision require? What happens if one is unavailable?
+
+### Privacy Posture
+Which entitlements does this imply? What is the minimal set?
+
+### Performance Budget
+Does this decision have implications for the 90Hz render budget?
+
+## Template Extensions
+
+Use the generic ADR template, then add these sections:
+
+```markdown
+## Spatial Context
+- User intent:
+- Surface model:
+- ARKit dependencies:
+
+## visionOS Consequences
+- Privacy implications:
+- Performance implications:
+- Simulator vs device behaviour:
+```
+
+## Superseding ADRs
+
+Never edit a filed ADR. When a decision is revisited:
+1. Write a new ADR that explains what changed and why
+2. Mark the old ADR "Superseded by ADR-NNN"
+3. Link both directions
 
 ## When To Switch Skills
 
-- Switch to `spec-driven-spatial` when the ADR feeds into a new feature spec.
-- Switch to `spatial-architecture` when you need to validate the decision
-  against the broader app architecture.
-- Switch to `incremental-build` when the decision is recorded and
-  implementation can begin.
+- `spec-driven-spatial` - the ADR may be an output of spec work
+- `spatial-architecture` - to validate the decision against app topology
+- `api-model-state-design` - when the ADR touches state ownership
+- `documentation-and-adrs` (agent-skills) - for the generic ADR template
 
 ## Guardrails
 
-- Do not skip documenting alternatives - every ADR must list what was considered
-  and rejected.
-- Do not write ADRs for trivial choices - reserve them for decisions that affect
-  scene models, entity architecture, or session strategy.
-- Do not modify an existing ADR - write a new ADR that supersedes the old one
-  and link to it.
-- Keep ADRs concise - context, decision, consequences, and alternatives. No
-  implementation detail.
-- Always include both positive and negative consequences of the decision.
+- Never skip the Alternatives section - list what was rejected and why
+- Never file ADRs for trivial choices
+- Never edit a filed ADR - supersede it instead
+- Keep ADRs concise - context, decision, consequences, alternatives, no code

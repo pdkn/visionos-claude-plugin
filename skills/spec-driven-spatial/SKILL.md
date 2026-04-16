@@ -1,54 +1,66 @@
 ---
 name: spec-driven-spatial
-description: Gate every visionOS feature on a scene model decision before writing code. The spec must answer scene ownership, entity lifecycle, ARKit session requirements, SharePlay needs, and privacy entitlements. No code until the spec is complete and reviewed.
+description: visionOS lens on spec-driven development. Gates every visionOS feature on a scene model decision before any code. Adds the spatial concerns (scene type, entity lifecycle, ARKit, SharePlay, entitlements) that a generic spec misses.
 ---
 
-# Spec-Driven Spatial Development
+# Spec-Driven Development - visionOS Lens
 
-## Quick Start
+## Addy Parent
 
-Use this skill before any implementation begins on a new visionOS feature.
+This skill extends `spec-driven-development` from agent-skills. Follow the generic "requirements and acceptance criteria before code" discipline there. This skill adds the spatial questions a visionOS feature spec must answer.
 
-Use it when:
-- you are starting a new feature and no specification exists yet
-- you need to decide between window, volume, immersive space, or a mixed flow
-- the feature involves ARKit sessions, SharePlay, or privacy entitlements
-- you want to ensure all spatial concerns are addressed before writing code
+## The visionOS Questions
 
-## Load References When
+A spec for a visionOS feature is incomplete until these are answered:
 
-| Reference | When to Use |
-|-----------|-------------|
-| [`references/surface-selection.md`](references/surface-selection.md) | When choosing the scene model for the feature. |
-| [`references/state-ownership.md`](references/state-ownership.md) | When defining entity lifecycle and ownership boundaries. |
-| [`references/arkit-sessions.md`](references/arkit-sessions.md) | When the feature requires world tracking, hand tracking, or plane detection. |
-| [`references/shareplay-requirements.md`](references/shareplay-requirements.md) | When the feature involves group activities or shared presence. |
-| [`references/entitlements.md`](references/entitlements.md) | When listing privacy entitlements and capabilities. |
+### 1. Scene Model
+Which surface does this feature own?
+- **Window** - flat UI, 2D content, no spatial placement
+- **Volume** - bounded 3D content, user-sized region
+- **Immersive Space** - full spatial control, replaces or augments the room
+- **Mixed** - multiple scene types interacting (window controlling an immersive space)
 
-## Workflow
+No default. Every spec must pick one and justify it against the user's spatial intent.
 
-1. Name the feature and its user-facing job.
-2. Choose the scene model: window, volume, immersive space, or mixed.
-3. Define entity lifecycle and ownership.
-4. Identify ARKit session requirements (if any).
-5. Identify SharePlay requirements (if any).
-6. List privacy entitlements needed.
-7. Write the spec document with acceptance criteria.
-8. Review spec with `spatial-architecture` skill for consistency.
-9. Only after spec approval, hand off to `incremental-build`.
+### 2. Entity Lifecycle and Ownership
+- Who creates entities? (view model, RealityKit system, anchor callback)
+- Who destroys them?
+- What is their parent in the scene graph?
+- Do they persist across scene transitions?
+
+### 3. ARKit Requirements
+- Which providers does this need? (`WorldTrackingProvider`, `HandTrackingProvider`, etc.)
+- When does the session start? When does it stop?
+- What does the feature do if authorization is denied or revoked?
+
+### 4. SharePlay Requirements
+- Is this a shared experience?
+- What state is shared? What is private?
+- How does the feature handle join mid-session?
+
+### 5. Privacy Entitlements
+- Which entitlements are required in `.entitlements`?
+- Which privacy usage descriptions are required in `Info.plist`?
+- What does the user see if permission is denied?
+
+## Acceptance Criteria
+
+visionOS-specific criteria the spec must include:
+- Feature works on Apple Vision Pro simulator (specify target visionOS version)
+- Scene transitions succeed without losing state (where applicable)
+- ARKit session authorization is handled gracefully
+- Feature degrades cleanly when entitlements are missing
 
 ## When To Switch Skills
 
-- Switch to `spatial-architecture` when you need to validate the scene model
-  choice against app-wide architecture.
-- Switch to `incremental-build` once the spec is approved and you are ready to
-  implement.
-- Switch to `adr-spatial` when a decision in the spec is significant enough to
-  warrant an architecture decision record.
+- `spatial-architecture` - validate scene model against app-wide architecture
+- `api-model-state-design` - design the state ownership implied by the spec
+- `adr-spatial` - record the scene model decision if non-obvious
+- `incremental-build` - after spec is approved, start implementation
 
 ## Guardrails
 
-- Do not write any implementation code until the spec is complete and reviewed.
-- Do not skip the scene model decision - every feature must declare its surface.
-- Do not assume entitlements are available - list them explicitly and verify.
-- Do not combine multiple features into a single spec - one spec per feature.
+- No implementation code until the five questions are answered
+- The scene model decision cannot be deferred - every feature declares its surface
+- Entitlements must be listed explicitly, not assumed available
+- One spec per feature - do not combine features into one spec

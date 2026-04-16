@@ -1,59 +1,86 @@
 ---
 name: debugging-triage
-description: Systematic five-step triage for visionOS issues. Reproduce on simulator, isolate to scene/entity/system, reduce to minimal repro, fix the root cause, and add a regression test. Covers ARKit session failures, RealityKit render loop timing bugs, hand tracking edge cases, and entitlement launch blockers.
+description: visionOS lens on debugging and error recovery. Classifies failures into five visionOS categories (ARKit session, RealityKit render loop, hand tracking, entitlement, scene lifecycle) and applies the appropriate triage for each.
 ---
 
-# Debugging Triage
+# Debugging Triage - visionOS Lens
 
-## Quick Start
+## Addy Parent
 
-Use this skill when something is broken or behaving unexpectedly in a visionOS
-app.
+This skill extends `debugging-and-error-recovery` from agent-skills. Follow the generic "reproduce, localize, fix, guard" discipline there. This skill adds visionOS-specific failure classification and triage paths.
 
-Use it when:
-- a build fails or the app crashes on the simulator
-- ARKit sessions fail to start or lose tracking
-- RealityKit render loop timing causes visual glitches or dropped frames
-- hand tracking behaves incorrectly at 90Hz
-- entitlement or capability issues block app launch
-- scene lifecycle transitions produce unexpected state
+## visionOS Failure Categories
 
-## Load References When
+Classify the failure first. The triage differs by category.
 
-| Reference | When to Use |
-|-----------|-------------|
-| [`references/arkit-sessions.md`](references/arkit-sessions.md) | When the failure involves world tracking, hand tracking, or provider sessions. |
-| [`references/realitykit-render-loop.md`](references/realitykit-render-loop.md) | When the issue is timing-related, frame drops, or render loop ordering. |
-| [`references/hand-tracking.md`](references/hand-tracking.md) | When hand tracking data is missing, delayed, or jittering at 90Hz. |
-| [`references/entitlements.md`](references/entitlements.md) | When the app fails to launch due to missing entitlements or capabilities. |
-| [`references/scene-lifecycle.md`](references/scene-lifecycle.md) | When the issue involves scene transitions or lifecycle callbacks. |
+### 1. ARKit Session Failure
 
-## Workflow
+**Symptoms:** providers fail to start, authorization unexpected, anchors drift or disappear, session ends without user action.
 
-1. Reproduce the issue on the Apple Vision Pro simulator.
-2. Classify the failure: ARKit session, RealityKit render loop, hand tracking,
-   entitlement, scene lifecycle, or other.
-3. Isolate to the specific scene, entity, system, or provider.
-4. Reduce to a minimal reproduction case.
-5. Fix the root cause (not the symptom).
-6. Add a regression test.
-7. Verify the fix on the simulator.
+**Triage:**
+- Check `ARKitSession.AuthorizationStatus` at the failure point
+- Verify entitlements match provider usage (`com.apple.developer.arkit.*`)
+- Check for simulator vs device behaviour differences (many providers are device-only)
+- Log session state transitions to narrow down when the failure occurs
+
+### 2. RealityKit Render Loop Issue
+
+**Symptoms:** visual glitches, dropped frames, entities flicker, transforms lag, components update out of order.
+
+**Triage:**
+- Capture an Instruments Time Profiler trace on the render path
+- Check system execution order (dependencies between systems)
+- Verify you are not mutating the entity hierarchy from multiple threads
+- Look for per-frame allocations that trigger GC or ARC churn
+
+### 3. Hand Tracking Issues at 90Hz
+
+**Symptoms:** jittery gestures, missing updates, delayed recognition, inconsistent anchor positions.
+
+**Triage:**
+- Confirm the 90Hz update rate is being sustained (check frame time)
+- Verify hand anchor processing is on the main actor or a consistent queue
+- Check for filtering or smoothing code that eats updates
+- Look for render-loop work that blocks the hand tracking stream
+
+### 4. Entitlement or Capability Launch Blocker
+
+**Symptoms:** app fails to launch, crashes at startup, provider authorization fails before prompt appears.
+
+**Triage:**
+- Read the built `Info.plist` and `.entitlements` (not the source - the packaged version)
+- Match each ARKit provider used to its required entitlement
+- Check for required privacy usage descriptions
+- Distinguish simulator behaviour from device provisioning issues
+
+### 5. Scene Lifecycle Bug
+
+**Symptoms:** state lost between scenes, immersive space does not open, window does not dismiss, transitions hang.
+
+**Triage:**
+- Log `Scene` body evaluations to narrow down re-evaluation triggers
+- Check `openImmersiveSpace` / `dismissImmersiveSpace` error results
+- Verify state ownership boundaries match the scene's lifetime
+- Look for state that outlives a scene it was scoped to
+
+## Regression Tests
+
+Every fix must add a regression test. For visionOS:
+- Unit test the failure classification if it is testable at that level
+- Integration test if the bug required a full simulator run to reproduce
+- Use the Prove-It pattern from `tdd-visionos`
 
 ## When To Switch Skills
 
-- Switch to `incremental-build` once the fix is verified and you are resuming
-  feature work.
-- Switch to `git-workflow` to commit the fix with a clear message referencing
-  the root cause.
-- Switch to `adr-spatial` if the fix reveals an architectural decision that
-  should be recorded.
-- Switch to `spec-driven-spatial` if the bug exposes a gap in the original spec.
+- `tdd-visionos` - write the Prove-It test before fixing
+- `perf-90hz` - when the triage category is render loop or hand tracking
+- `signing-entitlements` - when the category is entitlement or capability
+- `realitykit` / `arkit` - for deeper API-level debugging
+- `git-workflow` - after the fix is verified, commit separately from feature work
 
 ## Guardrails
 
-- Do not guess at fixes - reproduce first, then isolate, then fix.
-- Do not fix symptoms while leaving the root cause in place.
-- Do not skip the regression test - every fix must be verified against
-  re-introduction.
-- Do not apply fixes across multiple unrelated issues in a single pass.
-- Always verify the fix on the simulator before marking it done.
+- Never fix without reproducing first
+- Never fix the symptom while leaving the root cause
+- Never ship a fix without a regression test
+- Never combine unrelated fixes in one pass

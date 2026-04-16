@@ -1,59 +1,81 @@
 ---
 name: git-workflow
-description: Git workflow and versioning practices for visionOS projects. Atomic commits, never mix formatting with behaviour changes, commit at every green build point. Keep .xcodeproj and .entitlements changes in dedicated commits. Branch naming follows feature/scene-type/description convention.
+description: visionOS lens on git workflow and versioning. Adds visionOS-specific commit boundaries - .xcodeproj and .entitlements always in dedicated commits - and a scene-type branch naming convention.
 ---
 
-# Git Workflow
+# Git Workflow - visionOS Lens
 
-## Quick Start
+## Addy Parent
 
-Use this skill when committing, branching, or organizing version control for a
-visionOS project.
+This skill extends `git-workflow-and-versioning` from agent-skills. Follow the generic atomic commit discipline there. This skill adds the visionOS-specific commit boundaries and naming conventions.
 
-Use it when:
-- you are ready to commit after a successful simulator verification
-- you need to decide how to structure commits for a change
-- .xcodeproj, .entitlements, or Info.plist files were modified
-- you are creating a branch for a new feature or fix
-- you need to keep formatting changes separate from behaviour changes
+## Dedicated Commits
 
-## Load References When
+These types of changes must be isolated in their own commits:
 
-| Reference | When to Use |
-|-----------|-------------|
-| [`references/commit-conventions.md`](references/commit-conventions.md) | When writing commit messages or deciding commit boundaries. |
-| [`references/branch-naming.md`](references/branch-naming.md) | When creating a new branch for a feature or fix. |
-| [`references/xcodeproj-management.md`](references/xcodeproj-management.md) | When .xcodeproj changes need to be isolated in their own commit. |
-| [`references/entitlements.md`](references/entitlements.md) | When .entitlements or Info.plist changes need dedicated commits. |
+### `.xcodeproj` Changes
+- Adding, removing, or renaming targets
+- Changing build settings
+- Adding resources
+- Changing scheme definitions
 
-## Workflow
+Rationale: Xcode project files are noisy diffs. Bundling them with code changes makes review impossible and breaks git bisect.
 
-1. One logical change per commit.
-2. Never mix formatting or whitespace changes with behaviour changes.
-3. Commit at every green build point (simulator passes).
-4. Keep .xcodeproj changes in dedicated commits.
-5. Keep .entitlements and Info.plist changes in dedicated commits.
-6. Write commit messages that reference the scene model or component being
-   changed.
-7. Branch naming: `feature/scene-type/description`
-   (e.g., `feature/immersive/hand-tracking-setup`).
+### `.entitlements` and `Info.plist` Changes
+- Adding or removing entitlements
+- Adding privacy usage descriptions
+- Changing capability declarations
+
+Rationale: Entitlements affect signing, provisioning, and runtime behaviour. They need explicit review separately from feature code.
+
+### Asset Catalog Changes
+- Adding or replacing images, models, USD files
+- Texture updates
+- Audio asset changes
+
+Rationale: Large binary diffs slow down clones and merges. Separate commits help bisect if an asset introduces an issue.
+
+## Commit Message Conventions
+
+Reference what visionOS area the commit changes:
+
+- `scene: open new immersive space for detail view`
+- `realitykit: add HandPoseComponent and system`
+- `arkit: handle authorization revocation`
+- `entitlements: add hand tracking capability`
+- `xcodeproj: add tests target for RealityKit systems`
+
+## Branch Naming
+
+Convention: `<type>/<scene-type>/<short-description>`
+
+- `feature/immersive/hand-tracking-setup`
+- `feature/window/settings-redesign`
+- `fix/volume/scale-reset-on-open`
+- `refactor/scene-lifecycle/state-ownership`
+
+The scene-type segment is optional when the branch spans multiple scenes or is not scene-specific.
+
+## Green Build Commits
+
+Commit only at green points:
+- App builds on Apple Vision Pro simulator
+- App launches without new errors
+- Tests pass (or have not changed)
+
+If a slice from `incremental-build` passes the verification gate, that is a commit boundary.
 
 ## When To Switch Skills
 
-- Switch to `incremental-build` when you need to implement the next slice
-  before committing.
-- Switch to `debugging-triage` when a build fails after a commit and you need
-  to investigate.
-- Switch to `adr-spatial` when a commit involves a significant architectural
-  decision that should be recorded.
+- `incremental-build` - work to commit comes from here
+- `tdd-visionos` - tests to commit alongside code come from here
+- `debugging-triage` - fixes to commit come from here
+- `git-workflow-and-versioning` (agent-skills) - for merge strategy, conflict resolution, release branches
 
 ## Guardrails
 
-- Do not mix .xcodeproj changes with source code changes in the same commit.
-- Do not mix .entitlements or Info.plist changes with feature code in the same
-  commit.
-- Do not combine formatting and behaviour changes in the same commit.
-- Do not commit code that has not been verified on the simulator.
-- Do not use generic commit messages - always reference the scene model,
-  component, or system being changed.
-- Do not force-push to shared branches.
+- Never mix `.xcodeproj` changes with source changes
+- Never mix `.entitlements` or `Info.plist` changes with feature code
+- Never commit a slice that has not passed the simulator verification gate
+- Never force-push to shared branches
+- Never use generic commit messages like "fix stuff" or "updates"
